@@ -54,14 +54,26 @@ nav a {
   justify-content: center;
   text-align: center;
   color: white;
+  position: relative;
 }
-
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+  
 .hero h2 {
+  position: relative;
+  z-index: 1;
   font-size: 3.5rem;
   max-width: 700px;
 }
 
 .hero p {
+  position: relative;
+  z-index: 1;
   margin-top: 10px;
   font-size: 1rem;
 }
