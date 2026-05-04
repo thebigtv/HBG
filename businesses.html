@@ -582,7 +582,7 @@ document.getElementById('searchInput').addEventListener('input', e => {
 // Fetch & init
 async function init() {
   try {
-    const res = await fetch(CSV_URL);
+    const res = await fetch(CSV_URL + '&cachebust=' + Date.now()));
     if (!res.ok) throw new Error('Failed to fetch');
     const text = await res.text();
     const rows = parseCSV(text);
