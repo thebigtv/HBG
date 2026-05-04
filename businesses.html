@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Member Businesses – Hexham Business Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #222;
+  background: #f8f8f6;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav h1 { font-size: 1.2rem; }
+
+nav div a {
+  margin-left: 15px;
+  font-size: 0.9rem;
+  color: #444;
+  transition: color 0.2s;
+}
+nav div a:hover { color: #000; }
+nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000; }
+
+/* PAGE HEADER */
+.page-header {
+  background: #1a1a1a;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.page-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  font-size: 1rem;
+  color: #aaa;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* CONTROLS */
+.controls {
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 65px;
+  z-index: 99;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 14px;
+  background: #f8f8f6;
+  flex: 1;
+  min-width: 200px;
+  max-width: 340px;
+}
+
+.search-box input {
+  border: none;
+  background: none;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  width: 100%;
+  color: #222;
+}
+
+.search-box svg {
+  color: #999;
+  flex-shrink: 0;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #444;
+}
+
+.filter-btn:hover { border-color: #999; color: #000; }
+
+.filter-btn.active {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: white;
+}
+
+.results-count {
+  font-size: 0.85rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+/* MAIN SECTION */
+.section {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+@media(min-width: 600px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media(min-width: 900px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.4s ease forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+.card-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background: #eee;
+  display: block;
+}
+
+.card-image-placeholder {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(135deg, #f0f0ee, #e4e4e0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #bbb;
+  letter-spacing: 0.05em;
+}
+
+.card-content {
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  line-height: 1.3;
+  color: #111;
+}
+
+.card-owner {
+  font-size: 0.82rem;
+  color: #999;
+}
+
+.card p {
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.card-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+.card-link:hover { color: #000; }
+
+.card-phone {
+  font-size: 0.8rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* LOADING */
+.loading {
+  text-align: center;
+  padding: 80px 20px;
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #eee;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* EMPTY STATE */
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: #888;
+}
+
+.empty h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+/* CTA */
+.cta {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  margin-top: 20px;
+}
+
+.cta h2 { font-size: 1.8rem; margin-bottom: 10px; }
+.cta p { color: #666; margin-bottom: 20px; font-size: 0.95rem; }
+
+.cta a {
+  display: inline-block;
+  padding: 12px 28px;
+  background: #1a1a1a;
+  color: white;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.cta a:hover { background: #333; }
+
+/* FOOTER */
+footer {
+  padding: 30px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+}
+
+/* MEMBER COUNT BANNER */
+.member-banner {
+  background: #f0ede8;
+  border-top: 1px solid #e0ddd8;
+  border-bottom: 1px solid #e0ddd8;
+  text-align: center;
+  padding: 14px 20px;
+  font-size: 0.88rem;
+  color: #555;
+}
+
+.member-banner strong { color: #222; }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <h1>Hexham Business Group</h1>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="#">Events</a>
+    <a href="businesses.html" class="active">Businesses</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h2>Member Businesses</h2>
+  <p>Discover and support the businesses that make Hexham thrive</p>
+</div>
+
+<!-- MEMBER BANNER -->
+<div class="member-banner" id="memberBanner">
+  Loading member businesses…
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="search-box">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search businesses…" />
+  </div>
+
+  <div class="filters" id="filterButtons">
+    <button class="filter-btn active" data-cat="all">All</button>
+  </div>
+
+  <span class="results-count" id="resultsCount"></span>
+</div>
+
+<!-- GRID -->
+<div class="section">
+  <div class="loading" id="loadingState">
+    <div class="loading-spinner"></div>
+    Loading businesses…
+  </div>
+
+  <div class="grid" id="businessGrid" style="display:none;"></div>
+
+  <div class="empty" id="emptyState" style="display:none;">
+    <h3>No businesses found</h3>
+    <p>Try adjusting your search or filter</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>Is your business listed?</h2>
+  <p>Join the Hexham Business Group and appear in our directory</p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSAfAP13fK3KPiZ1BUBYAEvos9puwhkKVGBdMIAYoTC5GN6Q/viewform" target="_blank">Join the Group</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Hexham Business Group – Supporting local businesses and community activity
+</footer>
+
+<script>
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=450955826&single=true&output=csv';
+
+// Column mapping (0-indexed) — adjust if your Website sheet columns differ
+// Expected order from FILTER formula: Name, Business Name, Address, Description, Phone, Website, Category, Image
+const COL = {
+  name:     0,
+  business: 1,
+  address:  2,
+  desc:     3,
+  phone:    4,
+  website:  5,
+  category: 6,
+  image:    7
+};
+
+let allBusinesses = [];
+let activeCategory = 'all';
+let searchTerm = '';
+
+// Parse CSV (handles quoted fields with commas)
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  return lines.slice(1).map(line => {
+    const cols = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        inQuotes = !inQuotes;
+      } else if (ch === ',' && !inQuotes) {
+        cols.push(current.trim());
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+    cols.push(current.trim());
+    return cols;
+  }).filter(row => row.some(cell => cell.length > 0));
+}
+
+// Get initials for placeholder
+function initials(name) {
+  return (name || '?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+}
+
+// Render a single card
+function renderCard(row, index) {
+  const name     = row[COL.name]     || '';
+  const business = row[COL.business] || name;
+  const address  = row[COL.address]  || '';
+  const desc     = row[COL.desc]     || '';
+  const phone    = row[COL.phone]    || '';
+  const website  = row[COL.website]  || '';
+  const category = row[COL.category] || '';
+  const image    = row[COL.image]    || '';
+
+  const delay = (index % 9) * 0.05;
+
+  const imageHTML = image
+    ? `<img class="card-image" src="${image}" alt="${business}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+       <div class="card-image-placeholder" style="display:none;">${initials(business)}</div>`
+    : `<div class="card-image-placeholder">${initials(business)}</div>`;
+
+  const websiteHTML = website
+    ? `<a class="card-link" href="${website.startsWith('http') ? website : 'https://'+website}" target="_blank" rel="noopener">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Website
+      </a>` : '';
+
+  const phoneHTML = phone
+    ? `<span class="card-phone">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.47 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+        ${phone}
+      </span>` : '';
+
+  const footerHTML = (websiteHTML || phoneHTML)
+    ? `<div class="card-footer">${websiteHTML}${phoneHTML}</div>` : '';
+
+  return `
+    <div class="card" style="animation-delay:${delay}s" data-category="${category.toLowerCase()}">
+      ${imageHTML}
+      <div class="card-content">
+        ${category ? `<div class="card-category">${category}</div>` : ''}
+        <h3>${business}</h3>
+        ${name !== business ? `<div class="card-owner">${name}</div>` : ''}
+        ${desc ? `<p>${desc}</p>` : ''}
+        ${footerHTML}
+      </div>
+    </div>`;
+}
+
+// Filter and render
+function renderGrid() {
+  const grid = document.getElementById('businessGrid');
+  const empty = document.getElementById('emptyState');
+  const count = document.getElementById('resultsCount');
+
+  const filtered = allBusinesses.filter((row, i) => {
+    const business = (row[COL.business] || row[COL.name] || '').toLowerCase();
+    const desc     = (row[COL.desc] || '').toLowerCase();
+    const cat      = (row[COL.category] || '').toLowerCase();
+    const name     = (row[COL.name] || '').toLowerCase();
+
+    const matchesSearch = !searchTerm ||
+      business.includes(searchTerm) ||
+      desc.includes(searchTerm) ||
+      name.includes(searchTerm);
+
+    const matchesCat = activeCategory === 'all' || cat === activeCategory;
+
+    return matchesSearch && matchesCat;
+  });
+
+  count.textContent = `${filtered.length} business${filtered.length !== 1 ? 'es' : ''}`;
+
+  if (filtered.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    grid.style.display = 'grid';
+    grid.innerHTML = filtered.map((row, i) => renderCard(row, i)).join('');
+  }
+}
+
+// Build category filter buttons
+function buildFilters(businesses) {
+  const cats = [...new Set(
+    businesses.map(r => r[COL.category]).filter(Boolean).map(c => c.trim())
+  )].sort();
+
+  const container = document.getElementById('filterButtons');
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.cat = cat.toLowerCase();
+    btn.textContent = cat;
+    btn.addEventListener('click', () => {
+      activeCategory = cat.toLowerCase();
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGrid();
+    });
+    container.appendChild(btn);
+  });
+
+  // All button
+  container.querySelector('[data-cat="all"]').addEventListener('click', () => {
+    activeCategory = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    container.querySelector('[data-cat="all"]').classList.add('active');
+    renderGrid();
+  });
+}
+
+// Search
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  renderGrid();
+});
+
+// Fetch & init
+async function init() {
+  try {
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('Failed to fetch');
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    allBusinesses = rows;
+
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('memberBanner').innerHTML =
+      `<strong>${rows.length} member business${rows.length !== 1 ? 'es' : ''}</strong> proudly supporting Hexham`;
+
+    buildFilters(rows);
+    renderGrid();
+
+  } catch (err) {
+    document.getElementById('loadingState').innerHTML =
+      `<p style="color:#c00;">Unable to load businesses right now. Please try again shortly.</p>`;
+    console.error(err);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
