@@ -63,7 +63,7 @@ nav a {
   background: rgba(0, 0, 0, 0.45);
   z-index: 0;
 }
-  
+
 .hero h2 {
   position: relative;
   z-index: 1;
@@ -90,6 +90,23 @@ nav a {
   margin-bottom: 30px;
 }
 
+/* TYPE GROUP HEADING */
+.type-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 40px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.type-heading:first-of-type {
+  margin-top: 0;
+}
+
 /* GRID */
 .grid {
   display: grid;
@@ -108,6 +125,8 @@ nav a {
   border-radius: 10px;
   overflow: hidden;
   transition: 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
 .card img {
@@ -122,6 +141,9 @@ nav a {
 
 .card-content {
   padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .card h3 {
@@ -132,6 +154,82 @@ nav a {
 .card p {
   font-size: 0.9rem;
   color: #666;
+  margin: 0;
+}
+
+/* BADGE */
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  align-self: flex-start;
+}
+
+.badge-event {
+  background: #e8f0fe;
+  color: #1a56db;
+}
+
+.badge-job {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-news {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+/* CARD META (date, location) */
+.card-meta {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* CARD LINK */
+.card-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #222;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* NO IMAGE PLACEHOLDER */
+.card-no-image {
+  width: 100%;
+  height: 180px;
+  background: #f0ede8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #bbb;
+}
+
+/* EMPTY / LOADING STATE */
+.updates-status {
+  color: #888;
+  font-size: 0.95rem;
+  padding: 20px 0;
 }
 
 /* CTA */
@@ -174,37 +272,16 @@ footer {
 
 <section class="hero">
   <div>
-    <h2>Discover what’s happening in Hexham</h2>
+    <h2>Discover what's happening in Hexham</h2>
     <p>Led by local businesses, built for the town</p>
   </div>
 </section>
 
+<!-- THIS WEEK IN HEXHAM — live feed -->
 <section class="section">
   <h2>This Week in Hexham</h2>
-  <div class="grid">
-    <div class="card">
-      <img src="https://github.com/thebigtv/HBG/blob/main/Hexham-by-Night.jpeg?raw=true">
-      <div class="card-content">
-        <h3>Late Night Shopping</h3>
-        <p>Thursday evenings across the town</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="https://www.hexhamtowncouncil.gov.uk/wp-content/uploads/2021/08/Bandstand-speech.jpg">
-      <div class="card-content">
-        <h3>Live Music</h3>
-        <p>Across local venues this weekend</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="https://github.com/thebigtv/HBG/blob/main/Hexham%20kid.jpeg?raw=true">
-      <div class="card-content">
-        <h3>Family Activities</h3>
-        <p>Things to do with the kids this week</p>
-      </div>
-    </div>
+  <div id="updates-container">
+    <p class="updates-status">Loading latest updates…</p>
   </div>
 </section>
 
@@ -252,6 +329,144 @@ footer {
 <footer>
   Hexham Business Group – Supporting local businesses and community activity
 </footer>
+
+<script>
+
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=1368905752&single=true&output=csv";
+
+// Column index mapping (matches UpdatesWebsite FILTER output)
+const COL = {
+  business: 0,
+  type: 1,
+  headline: 2,
+  description: 3,
+  eventDate: 4,
+  eventTime: 5,
+  location: 6,
+  jobFilled: 7,
+  link: 8,
+  image: 9,
+  expires: 10
+};
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  // Skip header row
+  return lines.slice(1).map(line => {
+    const cols = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        inQuotes = !inQuotes;
+      } else if (ch === ',' && !inQuotes) {
+        cols.push(current.trim());
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+    cols.push(current.trim());
+    return cols;
+  }).filter(row => row.some(cell => cell !== ''));
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+function buildCard(row) {
+  const type = (row[COL.type] || '').toLowerCase().trim();
+  const headline = row[COL.headline] || '';
+  const description = row[COL.description] || '';
+  const business = row[COL.business] || '';
+  const imageUrl = row[COL.image] || '';
+  const link = row[COL.link] || '';
+  const eventDate = row[COL.eventDate] || '';
+  const eventTime = row[COL.eventTime] || '';
+  const location = row[COL.location] || '';
+
+  let badgeClass = 'badge-news';
+  let badgeLabel = 'News';
+  if (type === 'event') { badgeClass = 'badge-event'; badgeLabel = 'Event'; }
+  if (type === 'job') { badgeClass = 'badge-job'; badgeLabel = 'Now Hiring'; }
+
+  const imageHtml = imageUrl
+    ? `<img src="${imageUrl}" alt="${headline}" onerror="this.parentElement.innerHTML='<div class=\\'card-no-image\\'>${business.charAt(0) || '?'}</div>'">`
+    : `<div class="card-no-image">${business.charAt(0) || '?'}</div>`;
+
+  let metaHtml = '';
+  if (type === 'event') {
+    const formattedDate = formatDate(eventDate);
+    metaHtml = `<div class="card-meta">
+      ${formattedDate ? `<span>📅 ${formattedDate}${eventTime ? ' · ' + eventTime : ''}</span>` : ''}
+      ${location ? `<span>📍 ${location}</span>` : ''}
+    </div>`;
+  }
+
+  const linkHtml = link
+    ? `<a class="card-link" href="${link}" target="_blank" rel="noopener">Find out more →</a>`
+    : '';
+
+  return `
+    <div class="card">
+      ${imageHtml}
+      <div class="card-content">
+        <span class="badge ${badgeClass}">${badgeLabel}</span>
+        <h3>${headline}</h3>
+        <p>${description}</p>
+        ${business ? `<p style="margin-top:6px;font-size:0.8rem;color:#aaa;">${business}</p>` : ''}
+        ${metaHtml}
+        ${linkHtml}
+      </div>
+    </div>
+  `;
+}
+
+async function loadUpdates() {
+  const container = document.getElementById('updates-container');
+  try {
+    const res = await fetch(CSV_URL);
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    if (rows.length === 0) {
+      container.innerHTML = '<p class="updates-status">No updates this week — check back soon.</p>';
+      return;
+    }
+
+    const events = rows.filter(r => (r[COL.type] || '').toLowerCase().trim() === 'event');
+    const jobs   = rows.filter(r => (r[COL.type] || '').toLowerCase().trim() === 'job');
+    const news   = rows.filter(r => (r[COL.type] || '').toLowerCase().trim() === 'news');
+
+    let html = '';
+
+    if (events.length > 0) {
+      html += `<div class="type-heading">🗓 Events</div><div class="grid">${events.map(buildCard).join('')}</div>`;
+    }
+    if (jobs.length > 0) {
+      html += `<div class="type-heading">💼 Jobs</div><div class="grid">${jobs.map(buildCard).join('')}</div>`;
+    }
+    if (news.length > 0) {
+      html += `<div class="type-heading">📰 News</div><div class="grid">${news.map(buildCard).join('')}</div>`;
+    }
+
+    container.innerHTML = html || '<p class="updates-status">No updates this week — check back soon.</p>';
+
+  } catch (err) {
+    console.error('Failed to load updates:', err);
+    container.innerHTML = '<p class="updates-status">Unable to load updates right now — please try again shortly.</p>';
+  }
+}
+
+loadUpdates();
+
+</script>
 
 </body>
 </html>
