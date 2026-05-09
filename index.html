@@ -129,14 +129,23 @@ nav a {
   flex-direction: column;
 }
 
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
 .card:hover {
   transform: translateY(-5px);
+}
+
+/* CARD IMAGE — div with background-image works on mobile where <img> from Drive can fail */
+.card-image {
+  width: 100%;
+  height: 180px;
+  background-color: #f0ede8;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #bbb;
 }
 
 .card-content {
@@ -212,19 +221,6 @@ nav a {
   text-underline-offset: 2px;
 }
 
-/* NO IMAGE PLACEHOLDER */
-.card-no-image {
-  width: 100%;
-  height: 180px;
-  background: #f0ede8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  color: #bbb;
-}
-
 /* EMPTY / LOADING STATE */
 .updates-status {
   color: #888;
@@ -289,7 +285,7 @@ footer {
   <h2>From Local Businesses</h2>
   <div class="grid">
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1521334884684-d80222895322">
+      <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1521334884684-d80222895322')"></div>
       <div class="card-content">
         <h3>New Opening</h3>
         <p>Exciting new venue launching this summer</p>
@@ -297,7 +293,7 @@ footer {
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+      <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1492724441997-5dc865305da7')"></div>
       <div class="card-content">
         <h3>Seasonal Offers</h3>
         <p>Special promotions across town</p>
@@ -305,7 +301,7 @@ footer {
     </div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17">
+      <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17')"></div>
       <div class="card-content">
         <h3>Local Highlights</h3>
         <p>Discover hidden gems in Hexham</p>
@@ -334,7 +330,6 @@ footer {
 
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=1368905752&single=true&output=csv";
 
-// Column index mapping (matches UpdatesWebsite FILTER output)
 const COL = {
   business: 0,
   type: 1,
@@ -353,7 +348,6 @@ const COL = {
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
-  // Skip header row
   return lines.slice(1).map(line => {
     const cols = [];
     let current = '';
@@ -381,28 +375,36 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
+function getDriveId(row) {
+  const driveRaw = row[COL.driveUpload] || '';
+  const match = driveRaw.match(/id=([^&\s]+)/);
+  return match ? match[1] : null;
+}
+
 function buildCard(row) {
   const type = (row[COL.type] || '').toLowerCase().trim();
   const headline = row[COL.headline] || '';
   const description = row[COL.description] || '';
   const business = row[COL.business] || '';
-  const driveId = row[COL.driveUpload] ? row[COL.driveUpload].match(/id=([^&]+)/)?.[1] : null;
-const imageUrl = driveId
-  ? `https://drive.google.com/thumbnail?id=${driveId}&sz=w600`
-  : row[COL.image] || '';
   const link = row[COL.link] || '';
   const eventDate = row[COL.eventDate] || '';
   const eventTime = row[COL.eventTime] || '';
   const location = row[COL.location] || '';
+  const initial = business.charAt(0) || headline.charAt(0) || '?';
+
+  const driveId = getDriveId(row);
+  const imageUrl = driveId
+    ? `https://drive.google.com/thumbnail?id=${driveId}&sz=w800`
+    : (row[COL.image] || '');
 
   let badgeClass = 'badge-news';
   let badgeLabel = 'News';
   if (type === 'event') { badgeClass = 'badge-event'; badgeLabel = 'Event'; }
-  if (type === 'job') { badgeClass = 'badge-job'; badgeLabel = 'Now Hiring'; }
+  if (type === 'job')   { badgeClass = 'badge-job';   badgeLabel = 'Now Hiring'; }
 
   const imageHtml = imageUrl
-    ? `<img src="${imageUrl}" alt="${headline}" onerror="this.parentElement.innerHTML='<div class=\\'card-no-image\\'>${business.charAt(0) || '?'}</div>'">`
-    : `<div class="card-no-image">${business.charAt(0) || '?'}</div>`;
+    ? `<div class="card-image" data-src="${imageUrl}" data-initial="${initial}"></div>`
+    : `<div class="card-image">${initial}</div>`;
 
   let metaHtml = '';
   if (type === 'event') {
@@ -432,6 +434,33 @@ const imageUrl = driveId
   `;
 }
 
+// Load each card image via fetch → blob URL
+// This bypasses mobile browser cross-origin restrictions on Google Drive
+async function loadCardImages() {
+  const divs = document.querySelectorAll('.card-image[data-src]');
+  await Promise.all(Array.from(divs).map(async div => {
+    const src = div.dataset.src;
+    const initial = div.dataset.initial || '?';
+    try {
+      const res = await fetch(src);
+      if (!res.ok) throw new Error('fetch failed');
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      div.style.backgroundImage = `url('${blobUrl}')`;
+    } catch {
+      // Fallback: try setting directly (works on desktop even if mobile blocks)
+      div.style.backgroundImage = `url('${src}')`;
+      // If that also fails the onerror equivalent — show initial letter
+      const tester = new Image();
+      tester.onerror = () => {
+        div.style.backgroundImage = '';
+        div.textContent = initial;
+      };
+      tester.src = src;
+    }
+  }));
+}
+
 async function loadUpdates() {
   const container = document.getElementById('updates-container');
   try {
@@ -449,18 +478,14 @@ async function loadUpdates() {
     const news   = rows.filter(r => (r[COL.type] || '').toLowerCase().trim() === 'news');
 
     let html = '';
-
-    if (events.length > 0) {
-      html += `<div class="type-heading">🗓 Events</div><div class="grid">${events.map(buildCard).join('')}</div>`;
-    }
-    if (jobs.length > 0) {
-      html += `<div class="type-heading">💼 Jobs</div><div class="grid">${jobs.map(buildCard).join('')}</div>`;
-    }
-    if (news.length > 0) {
-      html += `<div class="type-heading">📰 News</div><div class="grid">${news.map(buildCard).join('')}</div>`;
-    }
+    if (events.length > 0) html += `<div class="type-heading">🗓 Events</div><div class="grid">${events.map(buildCard).join('')}</div>`;
+    if (jobs.length > 0)   html += `<div class="type-heading">💼 Jobs</div><div class="grid">${jobs.map(buildCard).join('')}</div>`;
+    if (news.length > 0)   html += `<div class="type-heading">📰 News</div><div class="grid">${news.map(buildCard).join('')}</div>`;
 
     container.innerHTML = html || '<p class="updates-status">No updates this week — check back soon.</p>';
+
+    // Load images via blob to fix mobile cross-origin issues
+    loadCardImages();
 
   } catch (err) {
     console.error('Failed to load updates:', err);
