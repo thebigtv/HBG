@@ -386,8 +386,10 @@ function buildCard(row) {
   const headline = row[COL.headline] || '';
   const description = row[COL.description] || '';
   const business = row[COL.business] || '';
-  const imageUrl = row[COL.driveUpload]
-    ? `https://drive.google.com/thumbnail?id=${row[COL.driveUpload].match(/id=([^&]+)/)?.[1]}&sz=w600`: row[COL.image] || '';
+  const driveId = row[COL.driveUpload] ? row[COL.driveUpload].match(/id=([^&]+)/)?.[1] : null;
+  const imageUrl = driveId
+    ? `https://wsrv.nl/?url=drive.google.com/thumbnail?id=${driveId}%26sz%3Dw600`
+    : row[COL.image] || '';
   const link = row[COL.link] || '';
   const eventDate = row[COL.eventDate] || '';
   const eventTime = row[COL.eventTime] || '';
