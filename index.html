@@ -387,9 +387,9 @@ function buildCard(row) {
   const description = row[COL.description] || '';
   const business = row[COL.business] || '';
   const driveId = row[COL.driveUpload] ? row[COL.driveUpload].match(/id=([^&]+)/)?.[1] : null;
-  const imageUrl = driveId
-    ? `https://wsrv.nl/?url=drive.google.com/thumbnail?id=${driveId}%26sz%3Dw600`
-    : row[COL.image] || '';
+const imageUrl = driveId
+  ? `https://drive.google.com/thumbnail?id=${driveId}&sz=w600`
+  : row[COL.image] || '';
   const link = row[COL.link] || '';
   const eventDate = row[COL.eventDate] || '';
   const eventTime = row[COL.eventTime] || '';
