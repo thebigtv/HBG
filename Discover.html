@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discover Hexham — Hexham Business Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+
+* { box-sizing: border-box; }
+
+:root {
+  --green:       #2d5a4e;
+  --green-dark:  #1e3d35;
+  --green-light: #f0f5f3;
+  --green-mid:   #3d7a6a;
+  --text:        #222;
+  --muted:       #666;
+  --border:      #e5e5e3;
+  --bg:          #f8f8f6;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ─── NAV ─── */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 36px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-links a {
+  font-size: 0.87rem;
+  font-weight: 400;
+  color: #444;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--green); }
+
+.nav-links a.active { color: var(--green); font-weight: 600; }
+
+.nav-links a.nav-cta {
+  background: var(--green);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.83rem;
+  transition: background 0.2s;
+}
+
+.nav-links a.nav-cta:hover { background: var(--green-dark); }
+
+@media (max-width: 600px) {
+  nav { padding: 12px 20px; }
+  .nav-logo img { height: 36px; }
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 0.76rem; }
+  .nav-links a.nav-cta { padding: 7px 11px; font-size: 0.76rem; }
+}
+
+/* ─── HERO ─── */
+.hero {
+  height: 70vh;
+  min-height: 460px;
+  background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600') center/cover no-repeat;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(18,40,34,0.85) 0%,
+    rgba(18,40,34,0.4) 50%,
+    rgba(0,0,0,0.1) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 52px 48px;
+  color: white;
+  max-width: 760px;
+}
+
+.hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  opacity: 0.82;
+  line-height: 1.65;
+  max-width: 500px;
+}
+
+@media (max-width: 600px) {
+  .hero { height: 60vh; }
+  .hero-content { padding: 32px 22px; }
+  .hero h1 { font-size: 2rem; }
+}
+
+/* ─── STORY BAND ─── */
+.story-band {
+  background: var(--green);
+  color: white;
+  padding: 56px 36px;
+}
+
+.story-band-inner {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.story-band h2 {
+  font-size: 1.7rem;
+  color: white;
+  margin-bottom: 18px;
+}
+
+.story-band p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.82);
+  margin: 0;
+}
+
+/* ─── SECTION NAV (sticky tabs) ─── */
+.section-nav {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 77px;
+  z-index: 90;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.section-nav-inner {
+  display: flex;
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 36px;
+}
+
+.section-nav a {
+  display: block;
+  padding: 16px 20px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.section-nav a:hover {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+@media (max-width: 600px) {
+  .section-nav { top: 62px; }
+  .section-nav-inner { padding: 0 16px; }
+  .section-nav a { padding: 13px 14px; font-size: 0.78rem; }
+}
+
+/* ─── CONTENT SECTION ─── */
+.content-section {
+  padding: 64px 36px;
+  max-width: 1100px;
+  margin: auto;
+  scroll-margin-top: 140px;
+}
+
+.content-section-header {
+  margin-bottom: 32px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.content-section-header h2 {
+  font-size: 1.9rem;
+}
+
+.section-count {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 600px) {
+  .content-section { padding: 48px 20px; scroll-margin-top: 120px; }
+}
+
+/* ─── GRID ─── */
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+@media(min-width: 700px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ─── CARD ─── */
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+}
+
+.card-image {
+  width: 100%;
+  height: 190px;
+  background-color: var(--green-light);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.card-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.card-tagline {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--green);
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.card p {
+  font-size: 0.87rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.card-meta {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.card-meta span {
+  font-size: 0.78rem;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ─── EMPTY STATE ─── */
+.empty-state {
+  color: var(--muted);
+  font-size: 0.92rem;
+  padding: 16px 0;
+  font-style: italic;
+}
+
+/* ─── DIVIDER ─── */
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ─── PLAN YOUR VISIT ─── */
+.visit-band {
+  background: var(--green-dark);
+  color: white;
+  padding: 64px 36px;
+}
+
+.visit-band-inner {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.visit-band h2 {
+  font-size: 1.9rem;
+  color: white;
+  margin-bottom: 36px;
+}
+
+.visit-grid {
+  display: grid;
+  gap: 32px;
+}
+
+@media(min-width: 700px) {
+  .visit-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.visit-item h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 10px;
+}
+
+.visit-item p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.visit-item a {
+  color: rgba(255,255,255,0.6);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.visit-item a:hover { color: white; }
+
+@media (max-width: 600px) {
+  .visit-band { padding: 52px 20px; }
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--green-dark);
+  color: rgba(255,255,255,0.5);
+  padding: 40px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-logo img {
+  height: 36px;
+  width: auto;
+  opacity: 0.8;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.45);
+  font-size: 0.8rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+.footer-copy {
+  font-size: 0.75rem;
+  width: 100%;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  footer { padding: 36px 20px; }
+  .footer-logo { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://raw.githubusercontent.com/thebigtv/HBG/refs/heads/main/9991EB41-8E60-4733-BF82-F40C2195145D.png" alt="Hexham Business Group">
+  </a>
+  <div class="nav-links">
+    <a href="index.html#whats-on">What's On</a>
+    <a href="discover.html" class="active">Discover Hexham</a>
+    <a href="businesses.html">Businesses</a>
+    <a href="index.html#join" class="nav-cta">Join Us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Hexham Business Group</p>
+    <h1>Discover Hexham</h1>
+    <p class="hero-sub">Ancient abbey. Roman Wall. Independent spirit. A market town that rewards those who take the time to explore it properly.</p>
+  </div>
+</section>
+
+<!-- STORY BAND -->
+<div class="story-band">
+  <div class="story-band-inner">
+    <h2>A town two thousand years in the making</h2>
+    <p>Hexham sits at a remarkable crossroads of history. Founded in 674 AD by St Wilfrid, its abbey has stood watch over the Tyne valley for over thirteen centuries. To the north runs Hadrian's Wall — the northern frontier of the Roman Empire, built nearly two thousand years ago and now a UNESCO World Heritage Site. Between the Wall and the town lies some of the finest countryside in northern England: the Tyne valley, the North Pennines, and the wide skies of Northumberland. And at the heart of it all, a thriving market town with independent businesses, a twice-weekly market, and a community that has welcomed visitors for generations.</p>
+  </div>
+</div>
+
+<!-- STICKY SECTION NAV -->
+<div class="section-nav">
+  <div class="section-nav-inner">
+    <a href="#eat-drink">🍽 Eat & Drink</a>
+    <a href="#see-do">🏛 See & Do</a>
+    <a href="#walks">🥾 Walks & Outdoors</a>
+    <a href="#stay">🛏 Stay</a>
+    <a href="#plan">🗺 Plan Your Visit</a>
+  </div>
+</div>
+
+<!-- EAT & DRINK -->
+<section class="content-section" id="eat-drink">
+  <div class="content-section-header">
+    <h2>Eat & Drink</h2>
+    <span class="section-count" id="eat-drink-count"></span>
+  </div>
+  <div class="grid" id="eat-drink-grid">
+    <p class="empty-state">Loading…</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SEE & DO -->
+<section class="content-section" id="see-do">
+  <div class="content-section-header">
+    <h2>See & Do</h2>
+    <span class="section-count" id="see-do-count"></span>
+  </div>
+  <div class="grid" id="see-do-grid">
+    <p class="empty-state">Loading…</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WALKS & OUTDOORS -->
+<section class="content-section" id="walks">
+  <div class="content-section-header">
+    <h2>Walks & Outdoors</h2>
+    <span class="section-count" id="walks-count"></span>
+  </div>
+  <div class="grid" id="walks-grid">
+    <p class="empty-state">Loading…</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STAY -->
+<section class="content-section" id="stay">
+  <div class="content-section-header">
+    <h2>Stay</h2>
+    <span class="section-count" id="stay-count"></span>
+  </div>
+  <div class="grid" id="stay-grid">
+    <p class="empty-state">Loading…</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PLAN YOUR VISIT -->
+<div class="visit-band" id="plan">
+  <div class="visit-band-inner">
+    <h2>Plan Your Visit</h2>
+    <div class="visit-grid">
+
+      <div class="visit-item">
+        <h4>Getting Here</h4>
+        <p>Hexham is on the Newcastle to Carlisle railway line with regular services. By road, take the A69 from Newcastle (30 mins) or Carlisle (45 mins). The town is well signposted from the A69.</p>
+      </div>
+
+      <div class="visit-item">
+        <h4>Market Days</h4>
+        <p>Hexham's outdoor market runs every <strong>Tuesday and Saturday</strong> in the Market Place. One of the oldest markets in the north of England — worth planning your visit around.</p>
+      </div>
+
+      <div class="visit-item">
+        <h4>Parking</h4>
+        <p>Several car parks in the town centre including Cattle Market, Gilesgate and Alemouth Road. Most offer short and long stay. The town centre is compact and walkable from any car park.</p>
+      </div>
+
+      <div class="visit-item">
+        <h4>Hadrian's Wall</h4>
+        <p>The Wall runs to the north of Hexham. Key sites include <a href="https://www.vindolanda.com" target="_blank">Vindolanda</a>, <a href="https://www.english-heritage.org.uk/visit/places/chesters-roman-fort-and-museum-hadrians-wall/" target="_blank">Chesters Fort</a> and Housesteads. All within 20 minutes by car.</p>
+      </div>
+
+      <div class="visit-item">
+        <h4>Hexham Abbey</h4>
+        <p>Founded in 674 AD, Hexham Abbey is one of the finest examples of early English architecture in the country. Free to visit. Open daily — check <a href="https://hexhamabbey.org.uk" target="_blank">hexhamabbey.org.uk</a> for times.</p>
+      </div>
+
+      <div class="visit-item">
+        <h4>Tourist Information</h4>
+        <p>For wider visitor information about Hexham and Northumberland, visit <a href="https://visithexham.com" target="_blank">visithexham.com</a> or the Northumberland National Park visitor centre at Once Brewed on the Wall.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="footer-logo">
+    <img src="https://raw.githubusercontent.com/thebigtv/HBG/refs/heads/main/4CEAF4D0-3CE2-4A6B-A36E-6644225455B7.png" alt="Hexham Business Group">
+  </a>
+  <div class="footer-links">
+    <a href="index.html#whats-on">What's On</a>
+    <a href="discover.html">Discover Hexham</a>
+    <a href="businesses.html">Businesses</a>
+    <a href="index.html#join">Join Us</a>
+    <a href="https://visithexham.com/">Visit Hexham</a>
+  </div>
+  <p class="footer-copy">© 2025 Hexham Business Group. Supporting local businesses and community activity in Hexham.</p>
+</footer>
+
+<!-- ── DISCOVER AUTOMATION ── -->
+<script>
+
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=631264015&single=true&output=csv";
+
+const COL = {
+  business:    0,
+  section:     1,
+  tagline:     2,
+  description: 3,
+  address:     4,
+  website:     5,
+  phone:       6,
+  image:       7
+};
+
+const SECTIONS = [
+  { key: 'Eat & Drink',       gridId: 'eat-drink-grid', countId: 'eat-drink-count' },
+  { key: 'See & Do',          gridId: 'see-do-grid',    countId: 'see-do-count'    },
+  { key: 'Walks & Outdoors',  gridId: 'walks-grid',     countId: 'walks-count'     },
+  { key: 'Stay',              gridId: 'stay-grid',      countId: 'stay-count'      }
+];
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  return lines.slice(1).map(line => {
+    const cols = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        inQuotes = !inQuotes;
+      } else if (ch === ',' && !inQuotes) {
+        cols.push(current.trim());
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+    cols.push(current.trim());
+    return cols;
+  }).filter(row => row.some(cell => cell !== ''));
+}
+
+function buildCard(row) {
+  const business    = row[COL.business]    || '';
+  const tagline     = row[COL.tagline]     || '';
+  const description = row[COL.description] || '';
+  const address     = row[COL.address]     || '';
+  const website     = row[COL.website]     || '';
+  const phone       = row[COL.phone]       || '';
+  const imageUrl    = row[COL.image]       || '';
+  const initial     = business.charAt(0)   || '?';
+
+  const imageHtml = imageUrl
+    ? `<div class="card-image" data-src="${imageUrl}" data-initial="${initial}"></div>`
+    : `<div class="card-image">${initial}</div>`;
+
+  const metaHtml = (address || phone) ? `
+    <div class="card-meta">
+      ${address ? `<span>📍 ${address}</span>` : ''}
+      ${phone   ? `<span>📞 ${phone}</span>`   : ''}
+    </div>` : '';
+
+  const linkHtml = website
+    ? `<a class="card-link" href="${website.startsWith('http') ? website : 'https://' + website}" target="_blank" rel="noopener">Visit website →</a>`
+    : '';
+
+  return `
+    <div class="card">
+      ${imageHtml}
+      <div class="card-content">
+        <h3>${business}</h3>
+        ${tagline ? `<p class="card-tagline">${tagline}</p>` : ''}
+        <p>${description}</p>
+        ${metaHtml}
+        ${linkHtml}
+      </div>
+    </div>
+  `;
+}
+
+async function loadCardImages() {
+  const divs = document.querySelectorAll('.card-image[data-src]');
+  await Promise.all(Array.from(divs).map(async div => {
+    const src     = div.dataset.src;
+    const initial = div.dataset.initial || '?';
+    try {
+      const res = await fetch(src);
+      if (!res.ok) throw new Error('failed');
+      const blob    = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      div.style.backgroundImage = `url('${blobUrl}')`;
+    } catch {
+      div.style.backgroundImage = `url('${src}')`;
+      const tester = new Image();
+      tester.onerror = () => {
+        div.style.backgroundImage = '';
+        div.textContent = initial;
+      };
+      tester.src = src;
+    }
+  }));
+}
+
+async function loadDiscover() {
+  try {
+    const res  = await fetch(CSV_URL);
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    SECTIONS.forEach(({ key, gridId, countId }) => {
+      const grid      = document.getElementById(gridId);
+      const countEl   = document.getElementById(countId);
+      const matching  = rows.filter(r =>
+        (r[COL.section] || '').trim().toLowerCase() === key.toLowerCase()
+      );
+
+      if (matching.length === 0) {
+        grid.innerHTML = `<p class="empty-state">No listings yet — <a href="#" style="color:var(--green)">apply to be featured</a>.</p>`;
+      } else {
+        grid.innerHTML = matching.map(buildCard).join('');
+        if (countEl) countEl.textContent = `${matching.length} listing${matching.length !== 1 ? 's' : ''}`;
+      }
+    });
+
+    loadCardImages();
+
+  } catch (err) {
+    console.error('Failed to load Discover listings:', err);
+    SECTIONS.forEach(({ gridId }) => {
+      document.getElementById(gridId).innerHTML =
+        `<p class="empty-state">Unable to load listings right now — please try again shortly.</p>`;
+    });
+  }
+}
+
+loadDiscover();
+
+</script>
+</body>
+</html>
