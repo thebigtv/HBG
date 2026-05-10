@@ -10,47 +10,86 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  font-family: 'Inter', sans-serif;
-  color: #222;
-  background: #f8f8f6;
+:root {
+  --green:      #2d5a4e;
+  --green-dark: #1e3d35;
+  --green-light:#f0f5f3;
+  --text:       #222;
+  --muted:      #666;
+  --border:     #e5e5e3;
+  --bg:         #f8f8f6;
 }
 
-h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--bg);
 }
+
+h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 a { text-decoration: none; color: inherit; }
 
-/* NAV */
+/* ─── NAV ─── */
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 14px 36px;
   background: white;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-nav h1 { font-size: 1.2rem; }
+.nav-logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
 
-nav div a {
-  margin-left: 15px;
-  font-size: 0.9rem;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-links a {
+  font-size: 0.87rem;
+  font-weight: 400;
   color: #444;
   transition: color 0.2s;
 }
-nav div a:hover { color: #000; }
-nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000; }
 
-/* PAGE HEADER */
-.page-header {
-  background: #1a1a1a;
+.nav-links a:hover { color: var(--green); }
+.nav-links a.active { color: var(--green); font-weight: 600; }
+
+.nav-links a.nav-cta {
+  background: var(--green);
   color: white;
-  padding: 60px 20px;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.83rem;
+  transition: background 0.2s;
+}
+
+.nav-links a.nav-cta:hover { background: var(--green-dark); }
+
+@media (max-width: 600px) {
+  nav { padding: 12px 20px; }
+  .nav-logo img { height: 36px; }
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 0.76rem; }
+  .nav-links a.nav-cta { padding: 7px 11px; font-size: 0.76rem; }
+}
+
+/* ─── PAGE HEADER ─── */
+.page-header {
+  background: var(--green-dark);
+  color: white;
+  padding: 60px 36px;
   text-align: center;
 }
 
@@ -61,23 +100,36 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
 
 .page-header p {
   font-size: 1rem;
-  color: #aaa;
+  color: rgba(255,255,255,0.7);
   max-width: 500px;
   margin: 0 auto;
 }
 
-/* CONTROLS */
+/* ─── MEMBER BANNER ─── */
+.member-banner {
+  background: var(--green-light);
+  border-top: 1px solid #d8e8e4;
+  border-bottom: 1px solid #d8e8e4;
+  text-align: center;
+  padding: 14px 20px;
+  font-size: 0.88rem;
+  color: var(--green);
+}
+
+.member-banner strong { color: var(--green-dark); }
+
+/* ─── CONTROLS ─── */
 .controls {
   background: white;
-  border-bottom: 1px solid #eee;
-  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 36px;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
   justify-content: space-between;
   position: sticky;
-  top: 65px;
+  top: 77px;
   z-index: 99;
 }
 
@@ -85,10 +137,10 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 8px 14px;
-  background: #f8f8f6;
+  background: var(--bg);
   flex: 1;
   min-width: 200px;
   max-width: 340px;
@@ -101,13 +153,10 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   width: 100%;
-  color: #222;
+  color: var(--text);
 }
 
-.search-box svg {
-  color: #999;
-  flex-shrink: 0;
-}
+.search-box svg { color: #999; flex-shrink: 0; }
 
 .filters {
   display: flex;
@@ -117,7 +166,7 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
 
 .filter-btn {
   padding: 6px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 20px;
   background: white;
   font-family: 'Inter', sans-serif;
@@ -127,11 +176,11 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   color: #444;
 }
 
-.filter-btn:hover { border-color: #999; color: #000; }
+.filter-btn:hover { border-color: var(--green); color: var(--green); }
 
 .filter-btn.active {
-  background: #1a1a1a;
-  border-color: #1a1a1a;
+  background: var(--green);
+  border-color: var(--green);
   color: white;
 }
 
@@ -141,14 +190,22 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   white-space: nowrap;
 }
 
-/* MAIN SECTION */
+@media (max-width: 600px) {
+  .controls { padding: 14px 20px; top: 62px; }
+}
+
+/* ─── MAIN SECTION ─── */
 .section {
-  padding: 40px 20px;
+  padding: 40px 36px;
   max-width: 1100px;
   margin: auto;
 }
 
-/* GRID */
+@media (max-width: 600px) {
+  .section { padding: 30px 20px; }
+}
+
+/* ─── GRID ─── */
 .grid {
   display: grid;
   gap: 20px;
@@ -163,7 +220,7 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   .grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* CARD */
+/* ─── CARD ─── */
 .card {
   background: white;
   border-radius: 10px;
@@ -189,21 +246,21 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   width: 100%;
   height: 160px;
   object-fit: contain;
-  background: #f8f8f6;
-  padding: 12px
+  background: var(--bg);
+  padding: 12px;
   display: block;
 }
 
 .card-image-placeholder {
   width: 100%;
   height: 160px;
-  background: linear-gradient(135deg, #f0f0ee, #e4e4e0);
+  background: var(--green-light);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
-  color: #bbb;
+  color: var(--green);
   letter-spacing: 0.05em;
 }
 
@@ -220,7 +277,7 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #888;
+  color: var(--green);
 }
 
 .card h3 {
@@ -253,13 +310,13 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
 .card-link {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #333;
+  color: var(--green);
   display: flex;
   align-items: center;
   gap: 4px;
   transition: color 0.2s;
 }
-.card-link:hover { color: #000; }
+.card-link:hover { color: var(--green-dark); }
 
 .card-phone {
   font-size: 0.8rem;
@@ -269,7 +326,7 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   gap: 4px;
 }
 
-/* LOADING */
+/* ─── LOADING ─── */
 .loading {
   text-align: center;
   padding: 80px 20px;
@@ -281,7 +338,7 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   width: 32px;
   height: 32px;
   border: 3px solid #eee;
-  border-top-color: #333;
+  border-top-color: var(--green);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto 16px;
@@ -289,7 +346,7 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* EMPTY STATE */
+/* ─── EMPTY STATE ─── */
 .empty {
   text-align: center;
   padding: 80px 20px;
@@ -302,7 +359,7 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
   color: #444;
 }
 
-/* CTA */
+/* ─── CTA ─── */
 .cta {
   text-align: center;
   padding: 60px 20px;
@@ -311,42 +368,63 @@ nav div a.active { font-weight: 600; color: #000; border-bottom: 2px solid #000;
 }
 
 .cta h2 { font-size: 1.8rem; margin-bottom: 10px; }
-.cta p { color: #666; margin-bottom: 20px; font-size: 0.95rem; }
+.cta p { color: var(--muted); margin-bottom: 20px; font-size: 0.95rem; }
 
 .cta a {
   display: inline-block;
-  padding: 12px 28px;
-  background: #1a1a1a;
+  padding: 13px 28px;
+  background: var(--green);
   color: white;
-  border-radius: 5px;
+  border-radius: 4px;
   font-size: 0.9rem;
   font-weight: 600;
   transition: background 0.2s;
 }
-.cta a:hover { background: #333; }
+.cta a:hover { background: var(--green-dark); }
 
-/* FOOTER */
+/* ─── FOOTER ─── */
 footer {
-  padding: 30px;
-  text-align: center;
+  background: var(--green-dark);
+  color: rgba(255,255,255,0.5);
+  padding: 40px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-logo img {
+  height: 36px;
+  width: auto;
+  opacity: 0.8;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.45);
   font-size: 0.8rem;
-  color: #777;
-  border-top: 1px solid #eee;
-  margin-top: 40px;
+  transition: color 0.2s;
 }
 
-/* MEMBER COUNT BANNER */
-.member-banner {
-  background: #f0ede8;
-  border-top: 1px solid #e0ddd8;
-  border-bottom: 1px solid #e0ddd8;
-  text-align: center;
-  padding: 14px 20px;
-  font-size: 0.88rem;
-  color: #555;
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+.footer-copy {
+  font-size: 0.75rem;
+  width: 100%;
+  margin-top: 8px;
 }
 
-.member-banner strong { color: #222; }
+@media (max-width: 600px) {
+  footer { padding: 36px 20px; }
+  .footer-logo { display: none; }
+}
 
 </style>
 </head>
@@ -354,18 +432,21 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <h1>Hexham Business Group</h1>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="#">Events</a>
+  <a href="index.html" class="nav-logo">
+    <img src="https://raw.githubusercontent.com/thebigtv/HBG/refs/heads/main/9991EB41-8E60-4733-BF82-F40C2195145D.png" alt="Hexham Business Group">
+  </a>
+  <div class="nav-links">
+    <a href="index.html#whats-on">What's On</a>
+    <a href="discover.html">Discover Hexham</a>
     <a href="businesses.html" class="active">Businesses</a>
+    <a href="index.html#join" class="nav-cta">Join Us</a>
   </div>
 </nav>
 
 <!-- PAGE HEADER -->
 <div class="page-header">
   <h2>Member Businesses</h2>
-  <p>Discover and support the businesses that make Hexham thrive</p>
+  <p>Discover and support the independent businesses that make Hexham thrive</p>
 </div>
 
 <!-- MEMBER BANNER -->
@@ -413,14 +494,24 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  Hexham Business Group – Supporting local businesses and community activity
+  <a href="index.html" class="footer-logo">
+    <img src="https://raw.githubusercontent.com/thebigtv/HBG/refs/heads/main/4CEAF4D0-3CE2-4A6B-A36E-6644225455B7.png" alt="Hexham Business Group">
+  </a>
+  <div class="footer-links">
+    <a href="index.html#whats-on">What's On</a>
+    <a href="discover.html">Discover Hexham</a>
+    <a href="businesses.html">Businesses</a>
+    <a href="index.html#join">Join Us</a>
+    <a href="https://visithexham.com/">Visit Hexham</a>
+  </div>
+  <p class="footer-copy">© 2025 Hexham Business Group. Supporting local businesses and community activity in Hexham.</p>
 </footer>
 
 <script>
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=450955826&single=true&output=csv';
 
-// Column mapping (0-indexed) — adjust if your Website sheet columns differ
-// Expected order from FILTER formula: Name, Business Name, Address, Description, Phone, Website, Category, Image
+// Column mapping — matches updated FILTER output (no Approved column)
+// Name, Business, Address, Description, Phone, Website, Category, Image
 const COL = {
   name:     0,
   business: 1,
@@ -436,7 +527,6 @@ let allBusinesses = [];
 let activeCategory = 'all';
 let searchTerm = '';
 
-// Parse CSV (handles quoted fields with commas)
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   return lines.slice(1).map(line => {
@@ -459,12 +549,10 @@ function parseCSV(text) {
   }).filter(row => row.some(cell => cell.length > 0));
 }
 
-// Get initials for placeholder
 function initials(name) {
   return (name || '?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
 }
 
-// Render a single card
 function renderCard(row, index) {
   const name     = row[COL.name]     || '';
   const business = row[COL.business] || name;
@@ -510,13 +598,12 @@ function renderCard(row, index) {
     </div>`;
 }
 
-// Filter and render
 function renderGrid() {
-  const grid = document.getElementById('businessGrid');
+  const grid  = document.getElementById('businessGrid');
   const empty = document.getElementById('emptyState');
   const count = document.getElementById('resultsCount');
 
-  const filtered = allBusinesses.filter((row, i) => {
+  const filtered = allBusinesses.filter(row => {
     const business = (row[COL.business] || row[COL.name] || '').toLowerCase();
     const desc     = (row[COL.desc] || '').toLowerCase();
     const cat      = (row[COL.category] || '').toLowerCase();
@@ -544,7 +631,6 @@ function renderGrid() {
   }
 }
 
-// Build category filter buttons
 function buildFilters(businesses) {
   const cats = [...new Set(
     businesses.map(r => r[COL.category]).filter(Boolean).map(c => c.trim())
@@ -565,7 +651,6 @@ function buildFilters(businesses) {
     container.appendChild(btn);
   });
 
-  // All button
   container.querySelector('[data-cat="all"]').addEventListener('click', () => {
     activeCategory = 'all';
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -574,13 +659,11 @@ function buildFilters(businesses) {
   });
 }
 
-// Search
 document.getElementById('searchInput').addEventListener('input', e => {
   searchTerm = e.target.value.toLowerCase().trim();
   renderGrid();
 });
 
-// Fetch & init
 async function init() {
   try {
     const res = await fetch(CSV_URL);
