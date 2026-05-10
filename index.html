@@ -328,7 +328,38 @@ hr.divider {
   text-underline-offset: 2px;
 }
 
-/* ─── STATUS ─── */
+/* ─── DISCOVER CARDS ─── */
+.discover-card {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.discover-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+}
+
+.discover-card-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.15);
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.discover-band .card h3 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+
 .updates-status {
   color: var(--muted);
   font-size: 0.95rem;
@@ -525,31 +556,37 @@ footer {
       <h2>Discover Hexham</h2>
     </div>
     <p class="section-intro">Gateway to Hadrian's Wall. Home to a 7th century abbey. Surrounded by some of the finest countryside in the north of England. There's more to Hexham than most people realise.</p>
-    <div class="grid">
+    <div class="grid" id="discover-cards">
 
-      <div class="card">
+      <!-- Eat & Drink -->
+      <a href="discover.html#eat-drink" class="card discover-card" id="discover-eat">
         <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600')"></div>
         <div class="card-content">
-          <h3>Eat &amp; Drink</h3>
-          <p>Independent restaurants, cafés and pubs — from market-day lunches to candlelit dinners.</p>
+          <div class="discover-card-label">Eat &amp; Drink</div>
+          <h3>Independent restaurants, cafés and pubs</h3>
+          <p>From market-day lunches to candlelit dinners.</p>
         </div>
-      </div>
+      </a>
 
-      <div class="card">
+      <!-- See & Do -->
+      <a href="discover.html#see-do" class="card discover-card" id="discover-see">
         <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1548438294-1ad5d5f4f063?w=600')"></div>
         <div class="card-content">
-          <h3>See &amp; Do</h3>
-          <p>Hexham Abbey, Hadrian's Wall, the market and local galleries — history and culture at every turn.</p>
+          <div class="discover-card-label">See &amp; Do</div>
+          <h3>History and culture at every turn</h3>
+          <p>Hexham Abbey, Hadrian's Wall, the market and local galleries.</p>
         </div>
-      </div>
+      </a>
 
-      <div class="card">
+      <!-- Walks & Outdoors -->
+      <a href="discover.html#walks" class="card discover-card" id="discover-walks">
         <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600')"></div>
         <div class="card-content">
-          <h3>Walks &amp; Outdoors</h3>
-          <p>The Tyne valley, Hadrian's Wall Path and the North Pennines — outstanding walking country.</p>
+          <div class="discover-card-label">Walks &amp; Outdoors</div>
+          <h3>Outstanding walking country</h3>
+          <p>The Tyne valley, Hadrian's Wall Path and the North Pennines.</p>
         </div>
-      </div>
+      </a>
 
     </div>
     <div class="discover-band-footer">
@@ -737,13 +774,18 @@ async function loadCardImages() {
   await Promise.all(Array.from(divs).map(async div => {
     const src     = div.dataset.src;
     const initial = div.dataset.initial || '?';
-    try {
-      const res = await fetch(src);
-      if (!res.ok) throw new Error('fetch failed');
-      const blob    = await res.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      div.style.backgroundImage = `url('${blobUrl}')`;
-    } catch {
+
+    if (src.includes('drive.google.com')) {
+      try {
+        const res = await fetch(src);
+        if (!res.ok) throw new Error('fetch failed');
+        const blob    = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        div.style.backgroundImage = `url('${blobUrl}')`;
+      } catch {
+        div.style.backgroundImage = `url('${src}')`;
+      }
+    } else {
       div.style.backgroundImage = `url('${src}')`;
       const tester = new Image();
       tester.onerror = () => {
@@ -786,6 +828,78 @@ async function loadUpdates() {
 }
 
 loadUpdates();
+
+// ── DISCOVER HEXHAM CARDS ──
+const DISCOVER_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=631264015&single=true&output=csv";
+
+const DCOL = {
+  business:    0,
+  section:     1,
+  tagline:     2,
+  description: 3,
+  image:       7
+};
+
+const DISCOVER_SECTIONS = [
+  { key: 'Eat & Drink',      cardId: 'discover-eat',   label: 'Eat & Drink',     link: 'discover.html#eat-drink', fallbackImg: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600', fallbackTitle: 'Independent restaurants, cafés and pubs', fallbackDesc: 'From market-day lunches to candlelit dinners.' },
+  { key: 'See & Do',         cardId: 'discover-see',   label: 'See & Do',        link: 'discover.html#see-do',    fallbackImg: 'https://images.unsplash.com/photo-1548438294-1ad5d5f4f063?w=600', fallbackTitle: 'History and culture at every turn',      fallbackDesc: 'Hexham Abbey, Hadrian\'s Wall, the market and local galleries.' },
+  { key: 'Walks & Outdoors', cardId: 'discover-walks', label: 'Walks & Outdoors', link: 'discover.html#walks',    fallbackImg: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600', fallbackTitle: 'Outstanding walking country',            fallbackDesc: 'The Tyne valley, Hadrian\'s Wall Path and the North Pennines.' }
+];
+
+function randomFrom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+async function loadDiscoverCards() {
+  try {
+    const res  = await fetch(DISCOVER_CSV_URL);
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    DISCOVER_SECTIONS.forEach(({ key, cardId, label, link, fallbackImg, fallbackTitle, fallbackDesc }) => {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const matching = rows.filter(r =>
+        (r[DCOL.section] || '').trim().toLowerCase() === key.toLowerCase()
+      );
+
+      if (matching.length === 0) return; // keep fallback static content
+
+      const pick    = randomFrom(matching);
+      const name    = pick[DCOL.business]    || fallbackTitle;
+      const tagline = pick[DCOL.tagline]     || fallbackDesc;
+      const imgUrl  = pick[DCOL.image]       || '';
+
+      // Update card content
+      card.querySelector('h3').textContent = name;
+      card.querySelector('p').textContent  = tagline;
+
+      // Update image
+      const imgDiv = card.querySelector('.card-image');
+      if (imgUrl) {
+        imgDiv.removeAttribute('style');
+        imgDiv.dataset.src     = imgUrl;
+        imgDiv.dataset.initial = name.charAt(0) || '?';
+        // Load image
+        if (imgUrl.includes('drive.google.com')) {
+          fetch(imgUrl)
+            .then(r => r.blob())
+            .then(blob => { imgDiv.style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; })
+            .catch(() => { imgDiv.style.backgroundImage = `url('${imgUrl}')`; });
+        } else {
+          imgDiv.style.backgroundImage = `url('${imgUrl}')`;
+        }
+      }
+    });
+
+  } catch (err) {
+    console.error('Failed to load Discover cards:', err);
+    // Silently fail — fallback static content remains
+  }
+}
+
+loadDiscoverCards();
 
 </script>
 </body>
