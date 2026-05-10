@@ -10,13 +10,13 @@
 * { box-sizing: border-box; }
 
 :root {
-  --green: #2d5a4e;
-  --green-dark: #1e3d35;
+  --green:       #2d5a4e;
+  --green-dark:  #1e3d35;
   --green-light: #f0f5f3;
-  --text: #222;
-  --muted: #666;
-  --border: #e5e5e3;
-  --bg: #f8f8f6;
+  --text:        #222;
+  --muted:       #666;
+  --border:      #e5e5e3;
+  --bg:          #f8f8f6;
 }
 
 body {
@@ -26,11 +26,7 @@ body {
   background: var(--bg);
 }
 
-h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
-  margin: 0;
-}
-
+h1, h2, h3 { font-family: 'Playfair Display', serif; margin: 0; }
 a { text-decoration: none; color: inherit; }
 
 /* ─── NAV ─── */
@@ -46,17 +42,9 @@ nav {
   z-index: 100;
 }
 
-.nav-logo img {
-  height: 48px;
-  width: auto;
-  display: block;
-}
+.nav-logo img { height: 48px; width: auto; display: block; }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
+.nav-links { display: flex; align-items: center; gap: 28px; }
 
 .nav-links a {
   font-size: 0.87rem;
@@ -79,13 +67,12 @@ nav {
 
 .nav-links a.nav-cta:hover { background: var(--green-dark); }
 
-/* Mobile nav */
 @media (max-width: 600px) {
   nav { padding: 12px 20px; }
-  .nav-logo img { height: 38px; }
-  .nav-links { gap: 14px; }
-  .nav-links a { font-size: 0.78rem; }
-  .nav-links a.nav-cta { padding: 7px 12px; }
+  .nav-logo img { height: 36px; }
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 0.76rem; }
+  .nav-links a.nav-cta { padding: 7px 11px; font-size: 0.76rem; }
 }
 
 /* ─── HERO ─── */
@@ -103,12 +90,7 @@ nav {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.72) 0%,
-    rgba(0,0,0,0.3) 50%,
-    rgba(0,0,0,0.05) 100%
-  );
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.05) 100%);
 }
 
 .hero-content {
@@ -129,12 +111,7 @@ nav {
   margin-bottom: 14px;
 }
 
-.hero h2 {
-  font-size: 3rem;
-  line-height: 1.1;
-  margin-bottom: 18px;
-  font-weight: 700;
-}
+.hero h2 { font-size: 3rem; line-height: 1.1; margin-bottom: 18px; font-weight: 700; }
 
 .hero-sub {
   font-size: 1rem;
@@ -158,10 +135,9 @@ nav {
 .hero-cta:hover { background: var(--green-dark); }
 
 @media (max-width: 600px) {
-  .hero { height: 92vh; align-items: flex-end; }
+  .hero { height: 92vh; }
   .hero-content { padding: 36px 22px; }
   .hero h2 { font-size: 2rem; }
-  .hero-sub { font-size: 0.92rem; }
 }
 
 /* ─── SECTION ─── */
@@ -198,26 +174,15 @@ nav {
   max-width: 560px;
 }
 
-@media (max-width: 600px) {
-  .section { padding: 52px 20px; }
-}
+@media (max-width: 600px) { .section { padding: 52px 20px; } }
 
 /* ─── DIVIDER ─── */
-hr.divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 0;
-}
+hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
 /* ─── GRID ─── */
-.grid {
-  display: grid;
-  gap: 20px;
-}
+.grid { display: grid; gap: 20px; }
 
-@media(min-width: 700px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
-}
+@media(min-width: 700px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* ─── CARD ─── */
 .card {
@@ -229,10 +194,7 @@ hr.divider {
   flex-direction: column;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.09);
-}
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.09); }
 
 .card-image {
   width: 100%;
@@ -249,25 +211,11 @@ hr.divider {
   flex-shrink: 0;
 }
 
-.card-content {
-  padding: 18px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+.card-content { padding: 18px; flex: 1; display: flex; flex-direction: column; }
 
-.card h3 {
-  font-size: 1.05rem;
-  margin-bottom: 6px;
-  line-height: 1.3;
-}
+.card h3 { font-size: 1.05rem; margin-bottom: 6px; line-height: 1.3; }
 
-.card p {
-  font-size: 0.87rem;
-  color: var(--muted);
-  margin: 0;
-  line-height: 1.55;
-}
+.card p { font-size: 0.87rem; color: var(--muted); margin: 0; line-height: 1.55; }
 
 /* ─── BADGE ─── */
 .badge {
@@ -302,20 +250,8 @@ hr.divider {
 .type-heading:first-of-type { margin-top: 0; }
 
 /* ─── CARD META ─── */
-.card-meta {
-  font-size: 0.79rem;
-  color: #888;
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.card-meta span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
+.card-meta { font-size: 0.79rem; color: #888; margin-top: 8px; display: flex; flex-direction: column; gap: 3px; }
+.card-meta span { display: flex; align-items: center; gap: 5px; }
 
 /* ─── CARD LINK ─── */
 .card-link {
@@ -328,17 +264,19 @@ hr.divider {
   text-underline-offset: 2px;
 }
 
+/* ─── STATUS ─── */
+.updates-status { color: var(--muted); font-size: 0.95rem; padding: 20px 0; }
+
 /* ─── DISCOVER CARDS ─── */
 .discover-card {
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
-.discover-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
-}
+.discover-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.3); }
 
 .discover-card-label {
   font-family: 'Inter', sans-serif;
@@ -354,57 +292,23 @@ hr.divider {
   margin-bottom: 8px;
 }
 
-.discover-band .card h3 {
-  font-size: 1rem;
-  margin-bottom: 5px;
-}
-
-
-.updates-status {
-  color: var(--muted);
-  font-size: 0.95rem;
-  padding: 20px 0;
-}
-
 /* ─── DISCOVER BAND ─── */
-.discover-band {
-  background: var(--green);
-  color: white;
-  padding: 72px 36px;
-}
-
-.discover-band-inner {
-  max-width: 1100px;
-  margin: auto;
-}
-
+.discover-band { background: var(--green); color: white; padding: 72px 36px; }
+.discover-band-inner { max-width: 1100px; margin: auto; }
 .discover-band .section-header h2 { color: white; }
-
-.discover-band .section-intro { color: rgba(255,255,255,0.72); }
+.discover-band .section-intro { color: rgba(255,255,255,0.72); margin-bottom: 32px; }
 
 .discover-band .card {
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.15);
-  backdrop-filter: blur(4px);
 }
 
-.discover-band .card:hover {
-  background: rgba(255,255,255,0.16);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.2);
-}
-
-.discover-band .card-image {
-  background-color: rgba(0,0,0,0.2);
-  color: rgba(255,255,255,0.4);
-}
-
+.discover-band .card:hover { background: rgba(255,255,255,0.16); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+.discover-band .card-image { background-color: rgba(0,0,0,0.2); color: rgba(255,255,255,0.4); }
 .discover-band .card h3 { color: white; }
 .discover-band .card p  { color: rgba(255,255,255,0.7); }
 
-.discover-band-footer {
-  margin-top: 36px;
-  text-align: center;
-}
+.discover-band-footer { margin-top: 36px; text-align: center; }
 
 .discover-band-footer a {
   display: inline-block;
@@ -414,34 +318,47 @@ hr.divider {
   border-radius: 4px;
   font-size: 0.88rem;
   font-weight: 600;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s;
 }
 
-.discover-band-footer a:hover {
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.6);
+.discover-band-footer a:hover { background: rgba(255,255,255,0.12); }
+
+@media (max-width: 600px) { .discover-band { padding: 52px 20px; } }
+
+/* ─── BUSINESSES BAND ─── */
+.businesses-band { padding: 72px 36px; background: var(--bg); }
+.businesses-band-inner { max-width: 1100px; margin: auto; }
+
+.biz-card {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 600px) {
-  .discover-band { padding: 52px 20px; }
+.biz-card .card-image {
+  background-color: white;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
+
+.biz-card-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+@media (max-width: 600px) { .businesses-band { padding: 52px 20px; } }
 
 /* ─── CTA ─── */
-.cta {
-  text-align: center;
-  padding: 72px 36px;
-  background: white;
-}
-
+.cta { text-align: center; padding: 72px 36px; background: white; }
 .cta h2 { font-size: 1.8rem; margin-bottom: 12px; }
-
-.cta p {
-  color: var(--muted);
-  margin: 0 auto 24px;
-  max-width: 460px;
-  font-size: 0.95rem;
-  line-height: 1.65;
-}
+.cta p { color: var(--muted); margin: 0 auto 24px; max-width: 460px; font-size: 0.95rem; line-height: 1.65; }
 
 .cta-btn {
   display: inline-block;
@@ -463,7 +380,6 @@ hr.divider {
 }
 
 .cta-btn-outline:hover { background: #f5f5f5; border-color: #999; }
-
 .cta-light { background: var(--bg); }
 
 /* ─── FOOTER ─── */
@@ -478,17 +394,9 @@ footer {
   gap: 16px;
 }
 
-.footer-logo img {
-  height: 36px;
-  width: auto;
-  opacity: 0.8;
-}
+.footer-logo img { height: 36px; width: auto; opacity: 0.8; }
 
-.footer-links {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
 
 .footer-links a {
   color: rgba(255,255,255,0.45);
@@ -497,12 +405,7 @@ footer {
 }
 
 .footer-links a:hover { color: rgba(255,255,255,0.8); }
-
-.footer-copy {
-  font-size: 0.75rem;
-  width: 100%;
-  margin-top: 8px;
-}
+.footer-copy { font-size: 0.75rem; width: 100%; margin-top: 8px; }
 
 @media (max-width: 600px) {
   footer { padding: 36px 20px; }
@@ -555,10 +458,9 @@ footer {
     <div class="section-header">
       <h2>Discover Hexham</h2>
     </div>
-    <p class="section-intro">Gateway to Hadrian's Wall. Home to a 7th century abbey. Surrounded by some of the finest countryside in the north of England. There's more to Hexham than most people realise.</p>
-    <div class="grid" id="discover-cards">
+    <p class="section-intro">Gateway to Hadrian's Wall. Home to a 7th century abbey. Surrounded by some of the finest countryside in the north of England.</p>
+    <div class="grid">
 
-      <!-- Eat & Drink -->
       <a href="discover.html#eat-drink" class="card discover-card" id="discover-eat">
         <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600')"></div>
         <div class="card-content">
@@ -568,7 +470,6 @@ footer {
         </div>
       </a>
 
-      <!-- See & Do -->
       <a href="discover.html#see-do" class="card discover-card" id="discover-see">
         <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1548438294-1ad5d5f4f063?w=600')"></div>
         <div class="card-content">
@@ -578,7 +479,6 @@ footer {
         </div>
       </a>
 
-      <!-- Walks & Outdoors -->
       <a href="discover.html#walks" class="card discover-card" id="discover-walks">
         <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600')"></div>
         <div class="card-content">
@@ -598,36 +498,48 @@ footer {
 <hr class="divider">
 
 <!-- LOCAL BUSINESSES -->
-<section class="section">
-  <div class="section-header">
-    <h2>Local Businesses</h2>
-    <a href="businesses.html">View full directory →</a>
+<div class="businesses-band">
+  <div class="businesses-band-inner">
+    <div class="section-header">
+      <h2>Local Businesses</h2>
+      <a href="businesses.html">View full directory →</a>
+    </div>
+    <p class="section-intro">The independent businesses that make Hexham what it is — browse our member directory and discover who's behind the town.</p>
+    <div class="grid" id="biz-cards">
+
+      <a href="businesses.html" class="card biz-card" id="biz-card-0">
+        <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1521334884684-d80222895322?w=600')"></div>
+        <div class="card-content">
+          <div class="biz-card-label">Shops &amp; Retail</div>
+          <h3>Independent retailers</h3>
+          <p>On the high street and beyond.</p>
+        </div>
+      </a>
+
+      <a href="businesses.html" class="card biz-card" id="biz-card-1">
+        <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=600')"></div>
+        <div class="card-content">
+          <div class="biz-card-label">Food &amp; Hospitality</div>
+          <h3>Restaurants, cafés and places to stay</h3>
+          <p>Warm welcomes across the town.</p>
+        </div>
+      </a>
+
+      <a href="businesses.html" class="card biz-card" id="biz-card-2">
+        <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600')"></div>
+        <div class="card-content">
+          <div class="biz-card-label">Services &amp; Trades</div>
+          <h3>Professional services and local experts</h3>
+          <p>The people who keep Hexham running.</p>
+        </div>
+      </a>
+
+    </div>
+    <div class="discover-band-footer" style="margin-top:32px;">
+      <a href="businesses.html" style="border-color:#ccc;color:#444;">View all member businesses →</a>
+    </div>
   </div>
-  <p class="section-intro">The independent businesses that make Hexham what it is. Browse our member directory and discover who's behind the town.</p>
-  <div class="grid">
-    <div class="card">
-      <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1521334884684-d80222895322?w=600')"></div>
-      <div class="card-content">
-        <h3>Shops &amp; Retail</h3>
-        <p>Independent retailers on the high street and beyond.</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=600')"></div>
-      <div class="card-content">
-        <h3>Food &amp; Hospitality</h3>
-        <p>Restaurants, cafés, pubs and places to stay.</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600')"></div>
-      <div class="card-content">
-        <h3>Services &amp; Trades</h3>
-        <p>Professional services, tradespeople and local experts.</p>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <hr class="divider">
 
@@ -654,31 +566,15 @@ footer {
     <a href="#whats-on">What's On</a>
     <a href="discover.html">Discover Hexham</a>
     <a href="businesses.html">Businesses</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeSAfAP13fK3KPiZ1BUBYAEvos9puwhkKVGBdMIAYoTC5GN6Q/viewform">Join Us</a>
+    <a href="#join">Join Us</a>
     <a href="https://visithexham.com/">Visit Hexham</a>
   </div>
   <p class="footer-copy">© 2025 Hexham Business Group. Supporting local businesses and community activity in Hexham.</p>
 </footer>
 
-<!-- ── WHAT'S ON AUTOMATION ── -->
 <script>
 
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=1368905752&single=true&output=csv";
-
-const COL = {
-  business:    0,
-  type:        1,
-  headline:    2,
-  description: 3,
-  eventDate:   4,
-  eventTime:   5,
-  location:    6,
-  jobFilled:   7,
-  link:        8,
-  image:       9,
-  driveUpload: 10,
-  expires:     11
-};
+// ── SHARED UTILITIES ──
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
@@ -689,19 +585,43 @@ function parseCSV(text) {
     let inQuotes = false;
     for (let i = 0; i < line.length; i++) {
       const ch = line[i];
-      if (ch === '"') {
-        inQuotes = !inQuotes;
-      } else if (ch === ',' && !inQuotes) {
-        cols.push(current.trim());
-        current = '';
-      } else {
-        current += ch;
-      }
+      if (ch === '"') { inQuotes = !inQuotes; }
+      else if (ch === ',' && !inQuotes) { cols.push(current.trim()); current = ''; }
+      else { current += ch; }
     }
     cols.push(current.trim());
     return cols;
   }).filter(row => row.some(cell => cell !== ''));
 }
+
+function randomFrom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function loadImage(div, src, initial) {
+  if (!src) return;
+  if (src.includes('drive.google.com')) {
+    fetch(src)
+      .then(r => r.blob())
+      .then(blob => { div.style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; })
+      .catch(() => { div.style.backgroundImage = `url('${src}')`; });
+  } else {
+    div.style.backgroundImage = `url('${src}')`;
+    const t = new Image();
+    t.onerror = () => { div.style.backgroundImage = ''; div.textContent = initial; };
+    t.src = src;
+  }
+}
+
+// ── WHAT'S ON ──
+
+const UPDATES_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=1368905752&single=true&output=csv";
+
+const UCOL = {
+  business: 0, type: 1, headline: 2, description: 3,
+  eventDate: 4, eventTime: 5, location: 6, jobFilled: 7,
+  link: 8, image: 9, driveUpload: 10, expires: 11
+};
 
 function formatDate(dateStr) {
   if (!dateStr) return null;
@@ -711,29 +631,27 @@ function formatDate(dateStr) {
 }
 
 function getDriveId(row) {
-  const driveRaw = row[COL.driveUpload] || '';
-  const match = driveRaw.match(/id=([^&\s]+)/);
-  return match ? match[1] : null;
+  const raw = row[UCOL.driveUpload] || '';
+  const m = raw.match(/id=([^&\s]+)/);
+  return m ? m[1] : null;
 }
 
-function buildCard(row) {
-  const type        = (row[COL.type] || '').toLowerCase().trim();
-  const headline    = row[COL.headline]    || '';
-  const description = row[COL.description] || '';
-  const business    = row[COL.business]    || '';
-  const link        = row[COL.link]        || '';
-  const eventDate   = row[COL.eventDate]   || '';
-  const eventTime   = row[COL.eventTime]   || '';
-  const location    = row[COL.location]    || '';
-  const initial     = business.charAt(0)   || headline.charAt(0) || '?';
-
-  const driveId  = getDriveId(row);
-  const imageUrl = driveId
+function buildUpdateCard(row) {
+  const type        = (row[UCOL.type] || '').toLowerCase().trim();
+  const headline    = row[UCOL.headline]    || '';
+  const description = row[UCOL.description] || '';
+  const business    = row[UCOL.business]    || '';
+  const link        = row[UCOL.link]        || '';
+  const eventDate   = row[UCOL.eventDate]   || '';
+  const eventTime   = row[UCOL.eventTime]   || '';
+  const location    = row[UCOL.location]    || '';
+  const initial     = business.charAt(0)    || headline.charAt(0) || '?';
+  const driveId     = getDriveId(row);
+  const imageUrl    = driveId
     ? `https://drive.google.com/thumbnail?id=${driveId}&sz=w800`
-    : (row[COL.image] || '');
+    : (row[UCOL.image] || '');
 
-  let badgeClass = 'badge-news';
-  let badgeLabel = 'News';
+  let badgeClass = 'badge-news', badgeLabel = 'News';
   if (type === 'event') { badgeClass = 'badge-event'; badgeLabel = 'Event'; }
   if (type === 'job')   { badgeClass = 'badge-job';   badgeLabel = 'Now Hiring'; }
 
@@ -743,9 +661,9 @@ function buildCard(row) {
 
   let metaHtml = '';
   if (type === 'event') {
-    const formattedDate = formatDate(eventDate);
+    const fd = formatDate(eventDate);
     metaHtml = `<div class="card-meta">
-      ${formattedDate ? `<span>📅 ${formattedDate}${eventTime ? ' · ' + eventTime : ''}</span>` : ''}
+      ${fd ? `<span>📅 ${fd}${eventTime ? ' · ' + eventTime : ''}</span>` : ''}
       ${location ? `<span>📍 ${location}</span>` : ''}
     </div>`;
   }
@@ -762,144 +680,122 @@ function buildCard(row) {
         <h3>${headline}</h3>
         <p>${description}</p>
         ${business ? `<p style="margin-top:6px;font-size:0.78rem;color:#bbb;">${business}</p>` : ''}
-        ${metaHtml}
-        ${linkHtml}
+        ${metaHtml}${linkHtml}
       </div>
-    </div>
-  `;
-}
-
-async function loadCardImages() {
-  const divs = document.querySelectorAll('.card-image[data-src]');
-  await Promise.all(Array.from(divs).map(async div => {
-    const src     = div.dataset.src;
-    const initial = div.dataset.initial || '?';
-
-    if (src.includes('drive.google.com')) {
-      try {
-        const res = await fetch(src);
-        if (!res.ok) throw new Error('fetch failed');
-        const blob    = await res.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        div.style.backgroundImage = `url('${blobUrl}')`;
-      } catch {
-        div.style.backgroundImage = `url('${src}')`;
-      }
-    } else {
-      div.style.backgroundImage = `url('${src}')`;
-      const tester = new Image();
-      tester.onerror = () => {
-        div.style.backgroundImage = '';
-        div.textContent = initial;
-      };
-      tester.src = src;
-    }
-  }));
+    </div>`;
 }
 
 async function loadUpdates() {
   const container = document.getElementById('updates-container');
   try {
-    const res  = await fetch(CSV_URL);
-    const text = await res.text();
-    const rows = parseCSV(text);
-
+    const rows = parseCSV(await (await fetch(UPDATES_CSV)).text());
     if (rows.length === 0) {
       container.innerHTML = '<p class="updates-status">No updates this week — check back soon.</p>';
       return;
     }
-
-    const events = rows.filter(r => (r[COL.type] || '').toLowerCase().trim() === 'event');
-    const jobs   = rows.filter(r => (r[COL.type] || '').toLowerCase().trim() === 'job');
-    const news   = rows.filter(r => (r[COL.type] || '').toLowerCase().trim() === 'news');
-
+    const events = rows.filter(r => (r[UCOL.type]||'').toLowerCase().trim() === 'event');
+    const jobs   = rows.filter(r => (r[UCOL.type]||'').toLowerCase().trim() === 'job');
+    const news   = rows.filter(r => (r[UCOL.type]||'').toLowerCase().trim() === 'news');
     let html = '';
-    if (events.length > 0) html += `<div class="type-heading">🗓 Events</div><div class="grid">${events.map(buildCard).join('')}</div>`;
-    if (jobs.length > 0)   html += `<div class="type-heading">💼 Jobs</div><div class="grid">${jobs.map(buildCard).join('')}</div>`;
-    if (news.length > 0)   html += `<div class="type-heading">📰 News</div><div class="grid">${news.map(buildCard).join('')}</div>`;
-
+    if (events.length) html += `<div class="type-heading">🗓 Events</div><div class="grid">${events.map(buildUpdateCard).join('')}</div>`;
+    if (jobs.length)   html += `<div class="type-heading">💼 Jobs</div><div class="grid">${jobs.map(buildUpdateCard).join('')}</div>`;
+    if (news.length)   html += `<div class="type-heading">📰 News</div><div class="grid">${news.map(buildUpdateCard).join('')}</div>`;
     container.innerHTML = html || '<p class="updates-status">No updates this week — check back soon.</p>';
-    loadCardImages();
-
+    document.querySelectorAll('.card-image[data-src]').forEach(div => {
+      loadImage(div, div.dataset.src, div.dataset.initial);
+    });
   } catch (err) {
-    console.error('Failed to load updates:', err);
+    console.error(err);
     container.innerHTML = '<p class="updates-status">Unable to load updates right now — please try again shortly.</p>';
   }
 }
 
-loadUpdates();
+// ── DISCOVER CARDS ──
 
-// ── DISCOVER HEXHAM CARDS ──
-const DISCOVER_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=631264015&single=true&output=csv";
+const DISCOVER_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=631264015&single=true&output=csv";
 
-const DCOL = {
-  business:    0,
-  section:     1,
-  tagline:     2,
-  description: 3,
-  image:       7
-};
+const DCOL = { business: 0, section: 1, tagline: 2, description: 3, image: 7 };
 
 const DISCOVER_SECTIONS = [
-  { key: 'Eat & Drink',      cardId: 'discover-eat',   label: 'Eat & Drink',     link: 'discover.html#eat-drink', fallbackImg: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600', fallbackTitle: 'Independent restaurants, cafés and pubs', fallbackDesc: 'From market-day lunches to candlelit dinners.' },
-  { key: 'See & Do',         cardId: 'discover-see',   label: 'See & Do',        link: 'discover.html#see-do',    fallbackImg: 'https://images.unsplash.com/photo-1548438294-1ad5d5f4f063?w=600', fallbackTitle: 'History and culture at every turn',      fallbackDesc: 'Hexham Abbey, Hadrian\'s Wall, the market and local galleries.' },
-  { key: 'Walks & Outdoors', cardId: 'discover-walks', label: 'Walks & Outdoors', link: 'discover.html#walks',    fallbackImg: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600', fallbackTitle: 'Outstanding walking country',            fallbackDesc: 'The Tyne valley, Hadrian\'s Wall Path and the North Pennines.' }
+  { key: 'Eat & Drink',      cardId: 'discover-eat',   link: 'discover.html#eat-drink' },
+  { key: 'See & Do',         cardId: 'discover-see',   link: 'discover.html#see-do'    },
+  { key: 'Walks & Outdoors', cardId: 'discover-walks', link: 'discover.html#walks'     }
 ];
-
-function randomFrom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
 
 async function loadDiscoverCards() {
   try {
-    const res  = await fetch(DISCOVER_CSV_URL);
-    const text = await res.text();
-    const rows = parseCSV(text);
-
-    DISCOVER_SECTIONS.forEach(({ key, cardId, label, link, fallbackImg, fallbackTitle, fallbackDesc }) => {
+    const rows = parseCSV(await (await fetch(DISCOVER_CSV)).text());
+    DISCOVER_SECTIONS.forEach(({ key, cardId }) => {
       const card = document.getElementById(cardId);
       if (!card) return;
-
-      const matching = rows.filter(r =>
-        (r[DCOL.section] || '').trim().toLowerCase() === key.toLowerCase()
-      );
-
-      if (matching.length === 0) return; // keep fallback static content
-
-      const pick    = randomFrom(matching);
-      const name    = pick[DCOL.business]    || fallbackTitle;
-      const tagline = pick[DCOL.tagline]     || fallbackDesc;
-      const imgUrl  = pick[DCOL.image]       || '';
-
-      // Update card content
+      const matching = rows.filter(r => (r[DCOL.section]||'').trim().toLowerCase() === key.toLowerCase());
+      if (!matching.length) return;
+      const pick = randomFrom(matching);
+      const name = pick[DCOL.business] || '';
+      const tag  = pick[DCOL.tagline]  || '';
+      const img  = pick[DCOL.image]    || '';
       card.querySelector('h3').textContent = name;
-      card.querySelector('p').textContent  = tagline;
-
-      // Update image
-      const imgDiv = card.querySelector('.card-image');
-      if (imgUrl) {
-        imgDiv.removeAttribute('style');
-        imgDiv.dataset.src     = imgUrl;
-        imgDiv.dataset.initial = name.charAt(0) || '?';
-        // Load image
-        if (imgUrl.includes('drive.google.com')) {
-          fetch(imgUrl)
-            .then(r => r.blob())
-            .then(blob => { imgDiv.style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; })
-            .catch(() => { imgDiv.style.backgroundImage = `url('${imgUrl}')`; });
-        } else {
-          imgDiv.style.backgroundImage = `url('${imgUrl}')`;
-        }
+      card.querySelector('p').textContent  = tag;
+      if (img) {
+        const imgDiv = card.querySelector('.card-image');
+        imgDiv.style.backgroundImage = '';
+        loadImage(imgDiv, img, name.charAt(0));
       }
     });
-
   } catch (err) {
-    console.error('Failed to load Discover cards:', err);
-    // Silently fail — fallback static content remains
+    console.error('Discover cards failed:', err);
   }
 }
 
+// ── BUSINESSES CARDS ──
+
+const BIZ_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTt5b_DITueQI6HmjoUD8htYisVP0yHrnrR59jBGmiz5BPj-yGxlN-oH7aW8JksOnhcCFov5IQMAWvo/pub?gid=450955826&single=true&output=csv";
+
+const BCOL = { name: 0, business: 1, address: 2, desc: 3, phone: 4, website: 5, category: 6, image: 7 };
+
+async function loadBizCards() {
+  try {
+    const rows = parseCSV(await (await fetch(BIZ_CSV)).text());
+    if (!rows.length) return;
+
+    // Group by category
+    const cats = {};
+    rows.forEach(r => {
+      const cat = (r[BCOL.category] || 'Other').trim();
+      if (!cats[cat]) cats[cat] = [];
+      cats[cat].push(r);
+    });
+
+    const catKeys = Object.keys(cats);
+    const cards   = document.querySelectorAll('.biz-card');
+
+    cards.forEach((card, i) => {
+      const cat = catKeys[i % catKeys.length];
+      if (!cat) return;
+      const pick     = randomFrom(cats[cat]);
+      const business = pick[BCOL.business] || pick[BCOL.name] || '';
+      const desc     = pick[BCOL.desc]     || '';
+      const img      = pick[BCOL.image]    || '';
+
+      card.querySelector('.biz-card-label').textContent = cat;
+      card.querySelector('h3').textContent = business;
+      card.querySelector('p').textContent  = desc;
+
+      if (img) {
+        const imgDiv = card.querySelector('.card-image');
+        imgDiv.style.backgroundImage = '';
+        loadImage(imgDiv, img, business.charAt(0));
+      }
+    });
+  } catch (err) {
+    console.error('Biz cards failed:', err);
+  }
+}
+
+// ── INIT ──
+loadUpdates();
 loadDiscoverCards();
+loadBizCards();
 
 </script>
 </body>
